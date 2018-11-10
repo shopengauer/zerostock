@@ -28,7 +28,7 @@ class ZeroserverApplicationTests {
     fun setEntry() {
 
     }
-
+    @Test
     fun loadKeyStore() {
         val ks = KeyStore.getInstance("JKS")
         val pwdArray = "password".toCharArray()
