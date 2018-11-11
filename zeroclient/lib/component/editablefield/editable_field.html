@@ -1,0 +1,12 @@
+<input (blur)="onBlur()"
+       (keyup.enter)="onEnter($event, textbox.value)"
+       *ngIf="isEdit"
+       type="text"
+       [value]="fieldValue"
+       #textbox
+       [size]="fieldSize"
+
+/>
+
+<span (click)="editText()"
+      *ngIf="!isEdit">{{fieldValue}}</span>

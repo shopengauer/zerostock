@@ -12,10 +12,6 @@ import 'package:bootjack/bootjack.dart';
 )
 class AppComponent {
 
-
-
-
-
   // Nothing here yet. All logic is in TodoListComponent.
   AppComponent(){
     Bootjack.useDefault();
