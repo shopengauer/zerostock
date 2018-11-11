@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    hikari:
+      password: qwasw1979
+      username: zerouser
+      jdbc-url: "jdbc:postgresql://95.179.153.133:5432/zerodb"
+  jpa:
+    hibernate:
+      ddl-auto: update
