@@ -1,3 +1,5 @@
 :host {
+    /*text-indent: 1.5em; !* Отступ первой строки *!*/
+    /*text-align: justify; !* Выравнивание по ширине *!*/
     /* This is equivalent of the 'body' selector of a page. */
 }
