@@ -4,9 +4,12 @@ package com.zeroserver.iexservice
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import pl.zankowski.iextrading4j.api.refdata.ExchangeSymbol
+import pl.zankowski.iextrading4j.api.stocks.Chart
+import pl.zankowski.iextrading4j.api.stocks.ChartRange
 import pl.zankowski.iextrading4j.api.stocks.Quote
 import pl.zankowski.iextrading4j.client.IEXTradingClient
 import pl.zankowski.iextrading4j.client.rest.request.refdata.SymbolsRequestBuilder
+import pl.zankowski.iextrading4j.client.rest.request.stocks.ChartRequestBuilder
 import pl.zankowski.iextrading4j.client.rest.request.stocks.QuoteRequestBuilder
 import kotlin.streams.toList
 
@@ -36,5 +39,13 @@ class IexService {
                 iexClient.executeRequest(quoteRequestBuilder)
             }.toList()
 
+
+    fun getQuotesForSymbol(symbol: String): Quote = iexClient.executeRequest(QuoteRequestBuilder().withSymbol(symbol).build())
+
+
+    fun getChart(symbol: String, chartRange: ChartRange ): List<Chart> {
+        val chartRequestBuilder = ChartRequestBuilder().withSymbol(symbol).withChartRange(chartRange).build()
+        return iexClient.executeRequest(chartRequestBuilder)
+    }
 
 }

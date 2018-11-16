@@ -6,6 +6,7 @@ import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.junit4.SpringRunner
+import pl.zankowski.iextrading4j.api.stocks.ChartRange
 import pl.zankowski.iextrading4j.client.IEXTradingClient
 import pl.zankowski.iextrading4j.client.rest.request.marketdata.TopsRequestBuilder
 import pl.zankowski.iextrading4j.client.rest.request.stocks.QuoteRequestBuilder
@@ -30,9 +31,22 @@ class IexServiceTest {
 
     @Test
     fun getQuote() {
-      // println(iexService.getQuotesForSymbols(arrayOf("AAPL","HT-D")))
-       println(iexClient.executeRequest(TopsRequestBuilder().withAllSymbols().build()))
+     while(true) {
+        val quote =  iexService.getQuotesForSymbol("PCG")
+         println("Realtime price = ${quote.iexRealtimePrice} Price change = ${quote.change}")
 
+         Thread.sleep(1000)
+     }
+      // println(iexClient.executeRequest(TopsRequestBuilder().withAllSymbols().build()))
 
+    }
+
+    @Test
+    fun getCharts() {
+        val charts = iexService.getChart("PCG", ChartRange.THREE_MONTHS)
+        for (chart in charts) {
+            println(chart)
+        }
+        println(charts.size)
     }
 }
