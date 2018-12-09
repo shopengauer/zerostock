@@ -12,6 +12,8 @@ import org.springframework.web.client.RestOperations
 class MoexServiceTest {
     @Autowired()
     private lateinit var restTemplate: RestOperations
+    @Autowired()
+    private lateinit var moexRestClient: MoexRestClient
 
 
     @Test
@@ -19,14 +21,18 @@ class MoexServiceTest {
 
 
       val response  =  restTemplate.getForObject("http://iss.moex.com/iss/engines/stock/markets/shares/securities/sber/trades.json", Trades::class.java)
-
-        println(response)
+       println(response?.dataversion?.seqNum)
 
      //   val numberOfTradesOnLastPage = numberOfTrades!! - 5000 * numberOfPages!!
      //   println(numberOfTradesOnLastPage)
 
+    }
 
-
+    @Test
+    fun moexRestClientTest() {
+        val stockList = listOf("SBER","AFLT")
+         println(moexRestClient.getListOfTradesUrl(stockList, tradeNo = 2906605206L))
+        //moexRestClient.getListOfTrades()
     }
 }
 

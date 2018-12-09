@@ -11,6 +11,7 @@ import java.io.IOException
 import java.math.BigDecimal
 import java.time.LocalDateTime
 import java.time.LocalTime
+import java.time.format.DateTimeFormatter
 
 
 /**
@@ -45,6 +46,10 @@ data class DataVersion(val version: Int = 0, val seqNum: Int = 0)
  */
 class TradeDeserializer @JvmOverloads constructor(vc: Class<*>? = null) : StdDeserializer<Trades>(vc) {
 
+
+    private val dateFormatter = DateTimeFormatter.ISO_LOCAL_TIME
+    private val dateTimeFormatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME
+
     @Throws(IOException::class, JsonProcessingException::class)
     override fun deserialize(jp: JsonParser?, p1: DeserializationContext?): Trades {
         val node: JsonNode = jp?.codec?.readTree(jp)!!
@@ -52,11 +57,11 @@ class TradeDeserializer @JvmOverloads constructor(vc: Class<*>? = null) : StdDes
         val tradeEntryList: List<TradeEntry> = tradesNode.get("data").asIterable()
                 .map {
                     val propList: List<String> = it.asIterable().map { prop ->
-                        prop.toString()
+                        prop.asText()
                     }
-                    TradeEntry(tradeNo = propList[0].toLong(), tradeTime = LocalTime.parse(propList[1]), boardId = propList[2],
+                    TradeEntry(tradeNo = propList[0].toLong(), tradeTime = LocalTime.parse(propList[1], dateFormatter), boardId = propList[2],
                             stockId = propList[3], price = BigDecimal.valueOf(propList[4].toDouble()), quantity = propList[5].toInt(),
-                            value = propList[6].toDouble(), period = propList[7], tradeTimeGrp = propList[8].toInt(), sysTime = LocalDateTime.parse(propList[9]),
+                            value = propList[6].toDouble(), period = propList[7], tradeTimeGrp = propList[8].toInt(), sysTime = LocalDateTime.parse(propList[9].replace(" ", "T"), dateTimeFormatter),
                             buySell = propList[10], decimals = propList[11].toInt())
                 }.toList()
 
