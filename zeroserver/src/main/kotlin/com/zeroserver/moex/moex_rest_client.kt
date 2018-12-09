@@ -9,19 +9,17 @@ class MoexRestClient{
 
     @Autowired()
     private lateinit var restTemplate: RestOperations
+ //tradeNo = 2906651700
 
+    fun getTrades(stockNames: List<String>) :  Trades? = restTemplate.getForObject( getTradesUrl(stockNames), Trades::class.java)
 
-    fun getListOfTradesUrl(stockNames: List<String>, tradeNo: Long = 0) : String{
+    fun getTradesUrl(stockNames: List<String>, tradeNo: Long = 0) : String{
         val stocks = stockNames.joinToString(separator = ",")
-        val url = "http://iss.moex.com/iss/engines/stock/markets/shares/trades.json?securities=$stocks" +
-                "${if(tradeNo!= 0L) "&tradeno=$tradeNo" else ""} "
-
-     //   val response  =  restTemplate.getForObject("http://iss.moex.com/iss/engines/stock/markets/shares/trades.json?securities=${stocks}" +
-     //           "${if(tradeNo!= 0L) "&tradeno=$tradeNo" else ""} ", Trades::class.java)
-       return url
+        return "http://iss.moex.com/iss/engines/stock/markets/shares/trades.json?securities=$stocks" +
+                "${getTradeNoText(tradeNo)} "
     }
 
-
+    private fun getTradeNoText(tradeNo: Long = 0) = if(tradeNo!= 0L) "&tradeno=$tradeNo" else ""
 
 
 }
