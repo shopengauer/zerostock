@@ -11,7 +11,7 @@ class MoexRestClient{
     private lateinit var restTemplate: RestOperations
  //tradeNo = 2906651700
 
-    fun getTrades(stockNames: List<String>) :  Trades? = restTemplate.getForObject( getTradesUrl(stockNames), Trades::class.java)
+    fun getTrades(stockNames: List<String>) :  Trades? = restTemplate.getForObject( getTradesUrl(stockNames, tradeNo = 2906651700), Trades::class.java)
 
     fun getTradesUrl(stockNames: List<String>, tradeNo: Long = 0) : String{
         val stocks = stockNames.joinToString(separator = ",")

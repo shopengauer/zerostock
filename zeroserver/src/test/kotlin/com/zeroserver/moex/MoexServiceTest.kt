@@ -33,38 +33,39 @@ class MoexServiceTest {
     fun moexRestClientTest() {
         val stockList = listOf("SBER")
         val result = moexRestClient.getTrades(stockList)
-        var buySellValue: Double = 0.0
-        var futBuySellValue: Double = 0.0
+
+        var buyValue: Int = 0
+        var sellValue: Int = 0
+
         val listOfTrades = result?.trades
-        var curBuySells = 0
-        var average : Double = 0.0
-        var prevAverage : Double = 0.0
-        var index = 0
-        var array = Array<Double>(50) { 0.0}
+        var prevSaldo = 0;
+        var totalDelta = 0
+
+        var positive = 0
+        var negative = 0
+        var prevPrice = 0
+
 
         if (listOfTrades != null) {
             IntRange(0, listOfTrades.size - 1).forEach { v ->
-                if(index < 50){
-                    if (listOfTrades[v].buySell == "S") {
-                        array[index] = -listOfTrades[v].value
-                        buySellValue -= listOfTrades[v].value
+                 if (listOfTrades[v].buySell == "S") {
+                        sellValue += listOfTrades[v].value.toInt()
                     } else {
-                        array[index] = listOfTrades[v].value
-                        buySellValue += listOfTrades[v].value
+
+                        buyValue += listOfTrades[v].value.toInt()
                     }
-                    index++
-                } else {
-                    average = array.sum()
-                  //  println("Total = $buySellValue Avarage  = ${average} Price delta = ${listOfTrades[v].price} Relation = ${if(buySellValue > 0 ) Math.abs(average/buySellValue) else average/buySellValue}")
-                    println(" Price = ${listOfTrades[v].price} Relation = ${if(average > 0 ) Math.abs(average/buySellValue) else average/buySellValue}")
-                    prevAverage = average;
-                    index = 0
-                }
 
-                   if (listOfTrades[v].price == BigDecimal.valueOf(193.4) || listOfTrades[v].price == BigDecimal.valueOf(193.8)) {
-                   //    println("Price = ${listOfTrades[v].price} and valume = $buySellValue delta = ${listOfTrades[v].value}  ${listOfTrades[v].buySell}")
+                    totalDelta += buyValue - sellValue - prevSaldo
+                    if(listOfTrades[v].value.toInt() > prevPrice) {
+                        positive++
+                    } else {
+                        negative++
+                    }
+                    println("Saldo = ${buyValue - sellValue} Price delta = ${listOfTrades[v].price} Delta: ${(buyValue - sellValue - prevSaldo )} Total delta = $totalDelta" )
+                    println(positive - negative)
+                    prevSaldo = buyValue - sellValue
+                    prevPrice = listOfTrades[v].value.toInt()
 
-                  }
             }
 
         }
