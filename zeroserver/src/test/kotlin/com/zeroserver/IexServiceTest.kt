@@ -49,4 +49,10 @@ class IexServiceTest {
         }
         println(charts.size)
     }
+
+    @Test
+    fun getDeepTest() {
+        val deep = iexService.getDeepForSymbol("AMD")
+        
+    }
 }
