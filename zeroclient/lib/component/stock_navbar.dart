@@ -2,11 +2,11 @@ import 'package:angular/angular.dart';
 import 'package:bootjack/bootjack.dart';
 
 @Component(
-  selector: "tb-navbar",
-  templateUrl: "navbar.html",
+  selector: "stock-navbar",
+  templateUrl: "stock_navbar.html",
   directives: const [coreDirectives],
 )
-class NavBar implements OnInit {
+class StockNavBar implements OnInit {
   @override
   ngOnInit() async {
     await Dropdown.use();

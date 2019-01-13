@@ -62,4 +62,10 @@ class IexService {
         return iexClient.executeRequest(deepBuilder)
     }
 
+    fun getOrderBookForSymbol(symbol: String) {
+
+    }
+
+
+
 }
