@@ -1,15 +1,12 @@
 import 'package:angular/angular.dart';
 import 'package:bootjack/bootjack.dart';
-import 'package:zeroclient/component/stock_navbar.dart';
-
-// AngularDart info: https://webdev.dartlang.org/angular
-// Components info: https://webdev.dartlang.org/components
+import 'package:zeroclient/component/stock_main_page.dart';
 
 @Component(
   selector: 'my-app',
   styleUrls: ['app_component.css'],
   templateUrl: 'app_component.html',
-  directives: [Bootjack, StockNavBar],
+  directives: [Bootjack, StockMainPage],
 )
 class AppComponent {
 

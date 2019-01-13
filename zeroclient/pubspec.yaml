@@ -10,6 +10,8 @@ environment:
 dependencies:
   angular: ^5.2.0
   bootjack: any
+  angular_router: ^2.0.0-alpha+21
+  angular_forms: ^2.1.1
  # angular_components: ^0.9.0
 
 dev_dependencies:
